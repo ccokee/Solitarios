@@ -16,4 +16,8 @@ public class Mvto {
 		this.numCartas=numCartas;
 		this.ref=ref;
 	}
+
+	public Mvto() {
+		// TODO Auto-generated constructor stub
+	}
 }

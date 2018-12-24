@@ -20,7 +20,14 @@ public class vJuego extends JFrame {
 	
 	private JPanel contentPane;
 	private Stats stats;
-
+	public static vJuego frame;
+	public JMenuItem mntmGuardar;
+	public JMenuItem mntmGuardarComo;
+	public JMenuItem mntmEstadisticas;
+	public JMenuItem mntmFicheroDeEstadisticas;
+	public JMenuItem mntmDeshacer;
+	public JMenuItem mntmHacer;
+	public JMenuItem mntmResolver;
 	/**
 	 * Launch the application.
 	 */
@@ -28,7 +35,7 @@ public class vJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vJuego frame = new vJuego();
+					frame = new vJuego();
 					JFrame.setDefaultLookAndFeelDecorated(true);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -73,7 +80,7 @@ public class vJuego extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego = new SolitarioClasico("BarajaF");
-				setContentPane(new pClasico(solitario.juego));
+				setContentPane(new pClasico(solitario.juego,frame));
 			}
 		});
 		mnNuevo.add(mntmClasico);
@@ -83,7 +90,7 @@ public class vJuego extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego = new SolitarioSaltos("BarajaE");
-				setContentPane(new pSaltos(solitario.juego));
+				setContentPane(new pSaltos(solitario.juego,frame)); 
 			}
 		});
 		mnNuevo.add(mntmSaltos);
@@ -97,59 +104,64 @@ public class vJuego extends JFrame {
 		});
 		mnArchivo.add(mntmAbrir);
 		
-		JMenuItem mntmGuardar = new JMenuItem("Guardar");
+		mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego.guardarSolitario(0);
 			}
 		});
+		mntmGuardar.setEnabled(false);;
 		mnArchivo.add(mntmGuardar);
 		
-		JMenuItem mntmGuardarComo = new JMenuItem("Guardar como...");
+		mntmGuardarComo = new JMenuItem("Guardar como...");
 		mntmGuardarComo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			solitario.juego.guardarSolitario(1);
 			}
 		});
+		mntmGuardarComo.setEnabled(false);
 		mnArchivo.add(mntmGuardarComo);
 		mnArchivo.add(mntmSalir);
 		
 		JMenu mnEditar = new JMenu("Editar");
 		menuBar.add(mnEditar);
 		
-		JMenuItem mntmDeshacer = new JMenuItem("Deshacer");
+		mntmDeshacer = new JMenuItem("Deshacer");
 		mntmDeshacer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice), 1);
 			}
 		});
+		mntmDeshacer.setEnabled(false);
 		mnEditar.add(mntmDeshacer);
 		
-		JMenuItem mntmHacer = new JMenuItem("Hacer");
+		mntmHacer = new JMenuItem("Hacer");
 		mntmHacer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice+1), 0);
 			}
 		});
+		mntmHacer.setEnabled(false);
 		mnEditar.add(mntmHacer);
 		
-		JMenuItem mntmResolver = new JMenuItem("Resolver");
+		mntmResolver = new JMenuItem("Resolver");
 		mntmResolver.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego.resolverSolitario(1);
 			}
 		});
+		mntmResolver.setEnabled(false);
 		mnEditar.add(mntmResolver);
 		
 		JMenu mnHistorial = new JMenu("Historial");
 		menuBar.add(mnHistorial);
 		
-		JMenuItem mntmEstadisticas = new JMenuItem("Estadisticas");
+		mntmEstadisticas = new JMenuItem("Estadisticas");
 		mntmEstadisticas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -161,7 +173,20 @@ public class vJuego extends JFrame {
 				}
 			}
 		});
+		mntmEstadisticas.setEnabled(false);
 		mnHistorial.add(mntmEstadisticas);
+		
+		mntmFicheroDeEstadisticas = new JMenuItem("Fichero de estadisticas");
+		mntmFicheroDeEstadisticas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				stats = new Stats();
+				if(stats!=null){
+					mntmEstadisticas.setEnabled(true);
+				}
+			}
+		});
+		mnHistorial.add(mntmFicheroDeEstadisticas);
 		
 		JMenuItem mntmAyuda = new JMenuItem("Ayuda");
 		mntmAyuda.addMouseListener(new MouseAdapter() {

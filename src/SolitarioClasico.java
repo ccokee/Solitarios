@@ -348,6 +348,7 @@ public class SolitarioClasico extends Solitario{
 		jugadasValidas();
 	}
 	
+	@Override
 	public void deshacerMovimiento(Mvto move){
 		if (indice>0){
 			int aux;
@@ -362,7 +363,15 @@ public class SolitarioClasico extends Solitario{
 		}
 	}
 	
-	private boolean montonesSolicionCompletos() {
+	@Override
+	public boolean mvtoCorrecto(Mvto mvto){
+		if (jugadasValidas.contains(mvto))
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean montonesSolicionCompletos() {
 		if(montonesSolucion.get(0).cartasMonton.size()==barajaJuego.getCartas().size()/4 &&
 				montonesSolucion.get(1).cartasMonton.size()==barajaJuego.getCartas().size()/4 &&
 				montonesSolucion.get(2).cartasMonton.size()==barajaJuego.getCartas().size()/4 &&

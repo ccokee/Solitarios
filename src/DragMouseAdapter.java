@@ -11,3 +11,4 @@ public class DragMouseAdapter extends MouseAdapter {
 		      handler.exportAsDrag(c, e, TransferHandler.COPY);
 		    }
 }
+

@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +17,15 @@ public class pSaltos extends pJuego {
 	public JLabel lblNodescu;
 	public pMontonS[] Montones = new pMontonS[52];
 	public JLabel lblMvmnt;
+	public JButton btnAnt,btnSig;
+	public String ref;
+	public int selector=0;
+	public int seleccion;
+	public int indiceD;
+	public int indiceO;
+	public int tipoD;
+	public int tipoO;
+	public int numCartas;
 
 	private static final long serialVersionUID = 1L;
 	MigLayout LayForGame = new MigLayout("", "[10.00][38.00][38.00]"
@@ -27,7 +38,7 @@ public class pSaltos extends pJuego {
 	/**
 	 * Create the panel.
 	 */
-	public pSaltos(Solitario solitarioSaltos) {
+	public pSaltos(Solitario solitarioSaltos, vJuego vjuego) {
 		this.solitario=solitarioSaltos;
 		setBackground(new Color(0,155,0));
 		setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][10.00][20.00,grow]"));
@@ -39,24 +50,30 @@ public class pSaltos extends pJuego {
 		lblNodescu=new JLabel();
 		add(lblNodescu, "cell 1 1");
 		
-		JPanel panel_1 = new JPanel();
-		add(panel_1, "cell 0 3 44 1,grow");
-		panel_1.setLayout(new GridLayout(1, 0, 0, 0));
+		JPanel panelbtns = new JPanel();
+		add(panelbtns, "cell 0 3 44 1,grow");
+		panelbtns.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JButton button = new JButton("< Ant");
-		panel_1.add(button);
+		btnAnt = new JButton("< Ant");
+		panelbtns.add(btnAnt);
 		
 		lblMvmnt = new JLabel( solitario.indice + "/" + solitario.loMasLejos);
-		panel_1.add(lblMvmnt);
+		panelbtns.add(lblMvmnt);
 		
-		JButton btnSiguiente = new JButton("Sig >");
-		panel_1.add(btnSiguiente);
+		btnSig = new JButton("Sig >");
+		panelbtns.add(btnSig);
 		
 		lblNodescu=new JLabel();
 		
 		for(int i=0; i<solitario.montones.size();i++){
 			add(Montones[i], "cell " + (i+2) +" 1");
 		}
+		btnAnt.setEnabled(false);
+		btnSig.setEnabled(false);
+		vjuego.mntmGuardar.setEnabled(true);
+		vjuego.mntmGuardarComo.setEnabled(true);
+		vjuego.mntmResolver.setEnabled(true);
+		refrescarSolitario();
 	}
 
 	public void refrescarSolitario(){
@@ -65,6 +82,22 @@ public class pSaltos extends pJuego {
 		
 		if(solitario.noDescubiertas.cartasMonton.size() > 9){
 			lblNodescu=solitario.noDescubiertas.cartasMonton.get(solitario.noDescubiertas.cartasMonton.size()-1);
+			lblNodescu.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if(selector==0){
+						if(solitario.noDescubiertas.cartasMonton.size() > 0){
+						tipoO=0;
+						indiceO=0;
+						tipoD=1;
+						indiceD=solitario.montones.size();
+						ref=solitario.noDescubiertas.cartasMonton.get(solitario.noDescubiertas.cartasMonton.size()-1).getRef();
+						numCartas=1;
+						hacerMvto(new Mvto(tipoO,indiceO,tipoD,indiceD,numCartas,ref));
+						}
+					}
+				}
+			});
 		}else{
 			JLabel Vacio = new JLabel();
 			ImageIcon icon;
@@ -72,8 +105,28 @@ public class pSaltos extends pJuego {
 			Vacio.setIcon(icon);
 			lblNodescu=Vacio;
 		}
+		
 		for(int i=0;i<solitario.montones.size();i++){
-			Montones[i]=new pMontonS(solitario.montones.get(i),1,i);
+			Montones[i]=new pMontonS(solitario.montones.get(i),1,i, this);
 		}
+		if(solitario.indice>0){
+			vJuego.frame.mntmDeshacer.setEnabled(true);
+			btnAnt.setEnabled(true);
+		}else{
+			vJuego.frame.mntmDeshacer.setEnabled(false);
+			btnAnt.setEnabled(false);
+		}
+		if(solitario.indice<solitario.loMasLejos){
+			vJuego.frame.mntmHacer.setEnabled(true);
+			btnSig.setEnabled(true);
+		} else {
+			vJuego.frame.mntmHacer.setEnabled(false);
+			btnSig.setEnabled(false);
+		}
+	}
+	public void hacerMvto(Mvto mvto) {
+		if(solitario.mvtoCorrecto(mvto));
+			solitario.hacerMovimiento(mvto, 0);
+		refrescarSolitario();
 	}
 }

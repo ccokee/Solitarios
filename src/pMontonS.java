@@ -1,11 +1,11 @@
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class pMontonS extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -13,10 +13,7 @@ public class pMontonS extends JPanel {
 	public int id=0;
 	public int type=0;
 	
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public pMontonS(Monton monton, int type, int id) {
+	public pMontonS(Monton monton, int type, int id, pSaltos psaltos) {
 		this.id=id;
 		this.type=type;
 		setBackground(new Color(0,155,0));
@@ -39,31 +36,34 @@ public class pMontonS extends JPanel {
 		setLayout(gridBagLayout);
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){
+			int cnt=i;
 			gbc_constraints[i].insets = new Insets(0, 0, 0, 0);
 			gbc_constraints[i].gridx = 0;
 			gbc_constraints[i].gridy = i;
+			if(cnt==monton.cartasMonton.size()-1){
+			monton.cartasMonton.get(i).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if(psaltos.selector==0){
+						psaltos.seleccion=cnt;
+						monton.cartasMonton.get(cnt).setPos(2);
+						psaltos.selector=1;
+						psaltos.tipoO=1;
+						psaltos.indiceO=id;
+						psaltos.ref=monton.cartasMonton.get(cnt).getRef();
+						psaltos.numCartas= 1;
+					} else {
+						monton.cartasMonton.get(psaltos.seleccion).setPos(1);
+						psaltos.selector=0;
+						psaltos.tipoD=1;
+						psaltos.indiceD=id;
+						psaltos.hacerMvto(new Mvto(psaltos.tipoO,psaltos.indiceO,psaltos.tipoD,psaltos.indiceD,psaltos.numCartas,psaltos.ref));
+					}
+				}
+			});
+			}
 			add(monton.cartasMonton.get(i), gbc_constraints);
 			}
 	}
 	
-	public pMontonS(int type, String baraja) {
-		this.type=type;
-		setBackground(new Color(0,155,0));
-		setSize(50,225);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{34, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		JLabel Vacio = new JLabel();
-		ImageIcon icon;
-		icon = new ImageIcon("Images/" + baraja + "/Hueco");
-		gridBagLayout.rowHeights = new int[]{25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbc_constraints[0].insets = new Insets(0, 0, 0, 0);
-		gbc_constraints[0].gridx = 0;
-		gbc_constraints[0].gridy = 0;
-		Vacio.setIcon(icon);
-		add(Vacio, gbc_constraints);
-	}
-
 }

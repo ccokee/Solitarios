@@ -74,8 +74,17 @@ public class Solitario {
 	public void hacerMovimiento(Mvto move, int deshaz) {
 		
 	}
+	
+	public void deshacerMovimiento(Mvto move){
+		
+	}
 
 	public boolean resolverSolitario(int orden) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean mvtoCorrecto(Mvto mvto) {
 		// TODO Auto-generated method stub
 		return false;
 	}
