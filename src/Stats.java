@@ -9,7 +9,10 @@ import javax.swing.JFileChooser;
 public class Stats {
 
 	public dStats dialogStats;
-	public int intentosC,intentosS,exitosC,exitosS;
+	public int intentosC=0;
+	public int intentosS=0;
+	public int exitosC=0;
+	public int exitosS=0;;
 	public File file;
 	public static boolean appendflse=false;
 	

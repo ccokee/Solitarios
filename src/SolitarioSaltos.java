@@ -18,10 +18,16 @@ public class SolitarioSaltos extends Solitario {
 		case "BarajaE":
 			barajaJuego=new BarajaE();
 			Collections.shuffle(barajaJuego.getCartas());
+			barajaJuego=new BarajaF();
+			montones=new ArrayList<Monton>();
+			noDescubiertas = new Monton(0,0);
 		break;
 		case "BarajaF":
 			barajaJuego=new BarajaF();
 			Collections.shuffle(barajaJuego.getCartas());
+			barajaJuego=new BarajaF();
+			montones=new ArrayList<Monton>();
+			noDescubiertas = new Monton(0,0);
 		break;
 		}
 		jugadasValidas();
@@ -67,9 +73,6 @@ public class SolitarioSaltos extends Solitario {
 	}
 	
 	public void distribuirCartas(){
-		
-		montones=null;
-		noDescubiertas=null;
 		
 		noDescubiertas=new Monton(0,0);
 		for(int i=barajaJuego.getCartas().size()-1;i>0;i--){
@@ -223,6 +226,7 @@ public class SolitarioSaltos extends Solitario {
 				}
 				printer.print(line);
 				printer.close();
+				writer.close();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

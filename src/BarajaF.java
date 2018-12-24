@@ -16,8 +16,8 @@ public class BarajaF implements Baraja{
 	public String Type="BarajaF";
 
 	public BarajaF(){
-		for (int i=0;i<13;i++){
-			for (int j=0;j<4;j++){
+		for (int i=0;i<4;i++){
+			for (int j=0;j<13;j++){
 				carta.add(new Carta(Refs[i][j], "BarajaF", 0));
 			}
 		}

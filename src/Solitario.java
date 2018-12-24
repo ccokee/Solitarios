@@ -25,7 +25,7 @@ public class Solitario {
 	public ArrayList<Monton> montones;
 	
 	public Solitario(){
-		
+		juego=this;
 	}
 	
 	public Solitario(int type){
@@ -88,5 +88,7 @@ public class Solitario {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+	public boolean montonesSolicionCompletos(){
+		return false;
+	}
 }

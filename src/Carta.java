@@ -16,9 +16,9 @@ public class Carta extends JLabel{
 		this.pos=pos;
 		this.setBaraja(baraja);
 		if(this.pos==1)
-			icon = new ImageIcon("Images/" + baraja + "/" + ref.charAt(0)+"_of_"+ref.charAt(1));
-		else
-			icon = new ImageIcon("Images/" + baraja + "/Reverse");
+			icon = new ImageIcon("Images/" + baraja + "/" + ref.charAt(0)+"_of_"+ref.charAt(1)+".png");
+		if(this.pos==0)
+			icon = new ImageIcon("Images/" + baraja + "/Reverse.png");
 		setIcon(icon);
 	}
 
@@ -45,11 +45,11 @@ public class Carta extends JLabel{
 	public void setPos(int pos) {
 		this.pos = pos;
 		if(this.pos==1)
-			this.icon = new ImageIcon("Images/" + this.baraja + "/" + this.ref.charAt(0)+"_of_"+ this.ref.charAt(1));
+			this.icon = new ImageIcon("Images/" + this.baraja + "/" + this.ref.charAt(0)+"_of_"+ this.ref.charAt(1)+".png");
 		else if(this.pos==0)
-			this.icon = new ImageIcon("Images/" + this.baraja + "/Reverse");
+			this.icon = new ImageIcon("Images/" + this.baraja + "/Reverse.png");
 		else if(this.pos==2)
-			this.icon = new ImageIcon("Images/" + this.baraja + "/" + this.ref.charAt(0)+"_of_"+this.ref.charAt(1)+"I");
+			this.icon = new ImageIcon("Images/" + this.baraja + "/" + this.ref.charAt(0)+"_of_"+this.ref.charAt(1)+"I.png");
 	}
 	
 }

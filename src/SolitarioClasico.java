@@ -18,10 +18,19 @@ public class SolitarioClasico extends Solitario{
 		case "BarajaE":
 			barajaJuego=new BarajaE();
 			Collections.shuffle(barajaJuego.getCartas());
+			barajaJuego=new BarajaF();
+			montonesJuego=new ArrayList<Monton>();
+			montonesSolucion=new ArrayList<Monton>();
+			Descubiertas = new Monton(0,1);
+			noDescubiertas = new Monton(0,0);
 			distribuirCartas();
 		break;
 		case "BarajaF":
 			barajaJuego=new BarajaF();
+			montonesSolucion=new ArrayList<Monton>();
+			montonesJuego=new ArrayList<Monton>();
+			Descubiertas = new Monton(0,1);
+			noDescubiertas = new Monton(0,0);
 			Collections.shuffle(barajaJuego.getCartas());
 			distribuirCartas();
 		break;
@@ -34,17 +43,14 @@ public class SolitarioClasico extends Solitario{
 		loMasLejos=0;
 		String linea=new String();
 		String[] tokens;
-		
-		montonesSolucion.clear();
-		montonesJuego.clear();
+
+		montonesSolucion=new ArrayList<Monton>();
+		montonesJuego=new ArrayList<Monton>();
 		
 		for(int i=0;i<4;i++)
 			montonesSolucion.add(new Monton(2,i));
 		for(int i=0;i<7;i++)
 			montonesJuego.add(new Monton(1,i));
-		
-		Descubiertas = new Monton(0,1);
-		noDescubiertas = new Monton(0,0);
 		
 		try {
 			this.file=file;
@@ -104,8 +110,7 @@ public class SolitarioClasico extends Solitario{
 	
 	public void distribuirCartas(){
 		int posimazo=0;
-		montonesSolucion=null;
-		montonesJuego=null;
+		
 		for(int i=0;i<4;i++){
 			montonesSolucion.add(new Monton(2,i));
 		}
@@ -174,6 +179,7 @@ public class SolitarioClasico extends Solitario{
 		//Ultima descubierta a Juego
 		for(int i=0;i<montonesJuego.size();i++){
 			if(montonesJuego.get(i).cartasMonton.size() > 0 && 
+					Descubiertas.cartasMonton.size() > 0 &&
 					(barajaJuego.cartaApilableColorOpuestoSuperior(Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1), 
 					montonesJuego.get(i).cartasMonton.get(montonesJuego.get(i).cartasMonton.size()-1)))){
 				jugadasValidas.add(new Mvto(0,1,1,i,1,montonesJuego.get(i).cartasMonton.get(montonesJuego.get(i).cartasMonton.size()-1).getRef()));
@@ -187,9 +193,11 @@ public class SolitarioClasico extends Solitario{
 						if(i==k)
 							k++;
 						if(montonesJuego.get(i).cartasMonton.size() > 0 &&
+								k<7 &&
+								montonesJuego.get(k).cartasMonton.size() >0 && 
 								(barajaJuego.cartaApilableColorOpuestoSuperior(montonesJuego.get(i).cartasMonton.get(j),
-								montonesJuego.get(k).cartasMonton.get(montonesJuego.get(i).cartasMonton.size()-1)))){
-							jugadasValidas.add(new Mvto(1,i,1,k,montonesJuego.get(i).cartasMonton.size()-1-j,montonesJuego.get(k).cartasMonton.get(montonesJuego.get(i).cartasMonton.size()-1).getRef()));
+								montonesJuego.get(k).cartasMonton.get(montonesJuego.get(k).cartasMonton.size()-1)))){
+							jugadasValidas.add(new Mvto(1,i,1,k,montonesJuego.get(i).cartasMonton.size()-1-j,montonesJuego.get(i).cartasMonton.get(montonesJuego.get(i).cartasMonton.size()-1).getRef()));
 						}
 					}
 				}
@@ -441,6 +449,7 @@ public class SolitarioClasico extends Solitario{
 				}
 				printer.print(line);
 				printer.close();
+				writer.close();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

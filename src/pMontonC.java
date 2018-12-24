@@ -41,6 +41,7 @@ public class pMontonC extends JPanel {
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			cnt=i;
+			gbc_constraints[i]=new GridBagConstraints();
 			gbc_constraints[i].insets = new Insets(0, 0, 0, 0);
 			gbc_constraints[i].gridx = 0;
 			gbc_constraints[i].gridy = i;
@@ -77,7 +78,7 @@ public class pMontonC extends JPanel {
 					}
 				}
 			});
-			add(monton.cartasMonton.get(i), gbc_constraints);
+			add(monton.cartasMonton.get(i), gbc_constraints[i]);
 			}
 		}
 

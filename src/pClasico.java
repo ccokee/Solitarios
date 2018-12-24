@@ -3,6 +3,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,21 +34,26 @@ public class pClasico extends JPanel {
 	public int numCartas;
 	public JButton btnAnt;
 	public JButton btnSig;
+	public vJuego vjuego;
+	public int movimientos;
 	/**
 	 * Create the panel.
 	 */
 
 	
 	public pClasico(Solitario solitarioClasico,vJuego vjuego) {
+		this.vjuego=vjuego;
+		movimientos=0;
 		setSize(700,400);
 		setLayout(new MigLayout("", "[10.00][50.00][50.00][20.00,grow][50.00][50.00][50.00][50.00][50.00][50.00][50.00][50.00][10.00,left]", "[10.00][75.00][10.00][225.00,grow][10.00][20.00,bottom]"));
 		setBackground(new Color(0,155,0));
 		
 		this.solitario=solitarioClasico;
 		
-		for (int i=0;i<MontonesJuego.length;i++)
+		for (int i=0;i<MontonesJuego.length;i++){
+			MontonesJuego[i]=new pMontonC();
 			add(MontonesJuego[i], "cell " + i + " 3");
-		
+		}
 		lblNodescu = new JLabel();
 		add(lblNodescu, "cell 1 1");
 		
@@ -245,8 +251,35 @@ public class pClasico extends JPanel {
 	}
 
 	public void hacerMvto(Mvto mvto) {
+		if(movimientos==0){
+			vjuego.stats.intentosC++;
+			movimientos++;
+		}else{
+			movimientos++;
+		}
 		if(solitario.mvtoCorrecto(mvto));
 			solitario.hacerMovimiento(mvto, 0);
 		refrescarSolitario();
+		if(solitario.montonesSolicionCompletos()){
+			vjuego.stats.exitosC++;
+			JOptionPane.showMessageDialog(vjuego.frame, "Has ganado!!");
+			if(vjuego.stats.file==null){
+				vjuego.stats.writeFichero(vjuego.stats.file, 1);
+			}else{
+				vjuego.stats.writeFichero(vjuego.stats.file,0);
+			}
+		}
+		if(solitario.jugadasValidas.size()==0 && solitario.noDescubiertas.cartasMonton.size()==0)
+			JOptionPane.showMessageDialog(vjuego.frame, "Has perdido!!");
+		/* 
+		  Por si manda ampliacion reciclar cartas
+		  
+		if(solitario.noDescubiertas.cartasMonton.size()==0){
+			vuelta++;
+		}
+		if(solitario.vuelta>0 && solitario.jugadasValidasDesdeVuelta==numCartasBaraja){
+			JOptionPane.showMessageDialog(vjuego.frame, "Has perdido!!");
+		}
+		*/
 	}
 }

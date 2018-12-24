@@ -19,7 +19,7 @@ public class vJuego extends JFrame {
 	public Solitario solitario;
 	
 	private JPanel contentPane;
-	private Stats stats;
+	public Stats stats;
 	public static vJuego frame;
 	public JMenuItem mntmGuardar;
 	public JMenuItem mntmGuardarComo;
@@ -49,6 +49,8 @@ public class vJuego extends JFrame {
 	 * Create the frame.
 	 */
 	public vJuego() {
+		
+		solitario = new Solitario();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 100);

@@ -1,6 +1,7 @@
 import java.awt.Color;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JPanel;
@@ -26,6 +27,8 @@ public class pSaltos extends pJuego {
 	public int tipoD;
 	public int tipoO;
 	public int numCartas;
+	public vJuego vjuego;
+	public int movimientos;
 
 	private static final long serialVersionUID = 1L;
 	MigLayout LayForGame = new MigLayout("", "[10.00][38.00][38.00]"
@@ -39,9 +42,11 @@ public class pSaltos extends pJuego {
 	 * Create the panel.
 	 */
 	public pSaltos(Solitario solitarioSaltos, vJuego vjuego) {
+		this.vjuego=vjuego;
 		this.solitario=solitarioSaltos;
-		setBackground(new Color(0,155,0));
+		this.movimientos=0;
 		setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][10.00][20.00,grow]"));
+		setBackground(new Color(0,155,0));
 		
 		for(int i=0; i<solitario.montones.size();i++){
 			add(Montones[i], "cell " + (i+2) + " 1" );
@@ -73,6 +78,7 @@ public class pSaltos extends pJuego {
 		vjuego.mntmGuardar.setEnabled(true);
 		vjuego.mntmGuardarComo.setEnabled(true);
 		vjuego.mntmResolver.setEnabled(true);
+		
 		refrescarSolitario();
 	}
 
@@ -125,8 +131,25 @@ public class pSaltos extends pJuego {
 		}
 	}
 	public void hacerMvto(Mvto mvto) {
+		if(movimientos==0){
+			vjuego.stats.intentosS++;
+			movimientos++;
+		}else{
+			movimientos++;
+		}
 		if(solitario.mvtoCorrecto(mvto));
 			solitario.hacerMovimiento(mvto, 0);
 		refrescarSolitario();
+		
+		if(solitario.jugadasValidas.size()==0){
+			vjuego.stats.exitosS++;
+			JOptionPane.showMessageDialog(vjuego.frame,"Te han quedado" + solitario.montones.size() + " montones");
+			if(vjuego.stats.file==null){
+				vjuego.stats.writeFichero(vjuego.stats.file, 1);
+			}else{
+				vjuego.stats.writeFichero(vjuego.stats.file,0);
+			}
+		}
+		
 	}
 }
