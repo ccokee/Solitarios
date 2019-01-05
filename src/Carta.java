@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -15,11 +17,15 @@ public class Carta extends JLabel{
 		this.ref=ref;
 		this.pos=pos;
 		this.setBaraja(baraja);
+		setBackground(new Color(255,255,255));
 		if(this.pos==1)
 			icon = new ImageIcon("Images/" + baraja + "/" + ref.charAt(0)+"_of_"+ref.charAt(1)+".png");
 		if(this.pos==0)
 			icon = new ImageIcon("Images/" + baraja + "/Reverse.png");
+		setHorizontalAlignment(JLabel.LEFT);
+		setVerticalAlignment(JLabel.TOP);
 		setIcon(icon);
+		setVisible(true);
 	}
 
 	public String getRef() {
@@ -44,12 +50,16 @@ public class Carta extends JLabel{
 
 	public void setPos(int pos) {
 		this.pos = pos;
-		if(this.pos==1)
+		if(this.pos==1){
 			this.icon = new ImageIcon("Images/" + this.baraja + "/" + this.ref.charAt(0)+"_of_"+ this.ref.charAt(1)+".png");
-		else if(this.pos==0)
+			setIcon(this.icon);
+		} else if(this.pos==0){
 			this.icon = new ImageIcon("Images/" + this.baraja + "/Reverse.png");
-		else if(this.pos==2)
+			setIcon(this.icon);
+		}else if(this.pos==2) {
 			this.icon = new ImageIcon("Images/" + this.baraja + "/" + this.ref.charAt(0)+"_of_"+this.ref.charAt(1)+"I.png");
+			setIcon(this.icon);
+		}
 	}
 	
 }

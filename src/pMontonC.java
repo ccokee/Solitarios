@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -17,18 +18,21 @@ public class pMontonC extends JPanel {
 	public int type=0;
 	public int cnt=0;
 	public int seleccion=-1;
+	public Monton monton;
 	
 	public pMontonC(Monton monton, int type, int id, pClasico pclasico) {
 		this.id=id;
 		this.type=type;
+		this.monton=monton;
 		setBackground(new Color(0,155,0));
-		setSize(50,225);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{53, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		setSize(70,250);
 		
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		/*
 		int[] altos = new int[20];
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			altos[i]=10;
@@ -37,6 +41,7 @@ public class pMontonC extends JPanel {
 			}
 		}
 		gridBagLayout.rowHeights=altos;
+		*/
 		setLayout(gridBagLayout);
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){
@@ -55,6 +60,7 @@ public class pMontonC extends JPanel {
 							pclasico.indiceD=id;
 							pclasico.indiceO=id;
 							pclasico.ref=monton.cartasMonton.get(cnt).getRef();
+							//pclasico.MontonesJuego[pclasico.seleccion].monton.cartasMonton.get(pclasico.indiceD).setPos(1);
 							pclasico.hacerMvto(new Mvto(pclasico.tipoO,pclasico.indiceO,pclasico.tipoD,pclasico.indiceD,1,pclasico.ref));
 						}else{
 							pclasico.seleccion=cnt;
@@ -69,7 +75,8 @@ public class pMontonC extends JPanel {
 						if(pclasico.seleccion<0){
 							pclasico.solitario.Descubiertas.cartasMonton.get(pclasico.solitario.Descubiertas.cartasMonton.size()-1).setPos(1);
 						} else {
-							monton.cartasMonton.get(pclasico.seleccion).setPos(1);
+							//monton.cartasMonton.get(pclasico.seleccion).setPos(1);
+							pclasico.MontonesJuego[pclasico.seleccion].monton.cartasMonton.get(pclasico.MontonesJuego[pclasico.seleccion].monton.cartasMonton.size()-pclasico.numCartas).setPos(1);
 							pclasico.selector=0;
 							pclasico.tipoD=1;
 							pclasico.indiceD=id;
@@ -78,13 +85,15 @@ public class pMontonC extends JPanel {
 					}
 				}
 			});
+			if(i!=monton.cartasMonton.size()-1)
+				monton.cartasMonton.get(i).setPreferredSize(new Dimension(70,10));
 			add(monton.cartasMonton.get(i), gbc_constraints[i]);
 			}
 		}
 
 	public pMontonC() {
 		setBackground(new Color(0,155,0));
-		setSize(50,225);
+		setSize(0,0);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{53, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -103,7 +112,7 @@ public class pMontonC extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		JLabel Vacio = new JLabel();
 		ImageIcon icon;
-		icon = new ImageIcon("Images/" + baraja + "/Hueco");
+		icon = new ImageIcon("Images/" + baraja + "/Hueco.png");
 		gridBagLayout.rowHeights = new int[]{75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbc_constraints[0].insets = new Insets(0, 0, 0, 0);
 		gbc_constraints[0].gridx = 0;

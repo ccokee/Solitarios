@@ -14,8 +14,11 @@ public class SolitarioClasico extends Solitario{
 	public SolitarioClasico(String TipoBaraja){	
 		indice=0;
 		loMasLejos=0;
+		movimientos= new ArrayList<Mvto>();
+		System.out.println("Size movimientos: "+movimientos.size());
 		switch(TipoBaraja){
 		case "BarajaE":
+			tipoBaraja=TipoBaraja;
 			barajaJuego=new BarajaE();
 			Collections.shuffle(barajaJuego.getCartas());
 			barajaJuego=new BarajaF();
@@ -26,6 +29,7 @@ public class SolitarioClasico extends Solitario{
 			distribuirCartas();
 		break;
 		case "BarajaF":
+			tipoBaraja=TipoBaraja;
 			barajaJuego=new BarajaF();
 			montonesSolucion=new ArrayList<Monton>();
 			montonesJuego=new ArrayList<Monton>();
@@ -398,7 +402,7 @@ public class SolitarioClasico extends Solitario{
 			}
 		}
 		try {
-			FileWriter writer = new FileWriter(file,false);
+			FileWriter writer = new FileWriter(file,true);
 			PrintWriter printer = new PrintWriter(writer);
 			String line = new String();
 			printer.println("Solitario clásico");

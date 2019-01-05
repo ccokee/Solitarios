@@ -9,19 +9,31 @@ import javax.swing.JFileChooser;
 public class Stats {
 
 	public dStats dialogStats;
-	public int intentosC=0;
-	public int intentosS=0;
-	public int exitosC=0;
-	public int exitosS=0;;
+	public int intentosC;
+	public int intentosS;
+	public int exitosC;
+	public int exitosS;
 	public File file;
 	public static boolean appendflse=false;
 	
 	public Stats(){
+			JFileChooser fileChooser=new JFileChooser();
+			int result = fileChooser.showOpenDialog(null);
+			if(result==JFileChooser.APPROVE_OPTION){
+				this.file = fileChooser.getSelectedFile();
+				//readFichero(file);
+			}
+			this.intentosC=0;
+			this.intentosS=0;
+			this.exitosC=0;
+			this.exitosS=0;
+	}
+	
+	public void setFile(){
 		JFileChooser fileChooser=new JFileChooser();
 		int result = fileChooser.showOpenDialog(null);
 		if(result==JFileChooser.APPROVE_OPTION){
 			this.file = fileChooser.getSelectedFile();
-			readFichero(file);
 		}
 	}
 	
@@ -44,6 +56,10 @@ public class Stats {
 			}
 			parser.close();
 		} catch (IOException ex){
+			intentosC=0;
+			intentosS=0;
+			exitosC=0;
+			exitosS=0;
 			return false;
 		}
 		dialogStats.lblExitosClasico.setText("Exitos: " + exitosC);
@@ -63,7 +79,7 @@ public class Stats {
 		}
 		try {
 			FileWriter writer = new FileWriter(file);
-			PrintWriter printer = new PrintWriter(writer,false);
+			PrintWriter printer = new PrintWriter(writer,true);
 			printer.println("Solitario saltos");
 			printer.println(intentosS);
 			printer.println(exitosS);

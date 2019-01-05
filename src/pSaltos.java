@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class pSaltos extends pJuego {
 	
@@ -47,11 +48,11 @@ public class pSaltos extends pJuego {
 		this.movimientos=0;
 		setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][10.00][20.00,grow]"));
 		setBackground(new Color(0,155,0));
-		
+		/*
 		for(int i=0; i<solitario.montones.size();i++){
 			add(Montones[i], "cell " + (i+2) + " 1" );
 		}
-		
+		*/
 		lblNodescu=new JLabel();
 		add(lblNodescu, "cell 1 1");
 		
@@ -63,16 +64,18 @@ public class pSaltos extends pJuego {
 		panelbtns.add(btnAnt);
 		
 		lblMvmnt = new JLabel( solitario.indice + "/" + solitario.loMasLejos);
+		lblMvmnt.setHorizontalAlignment(SwingConstants.CENTER);
 		panelbtns.add(lblMvmnt);
 		
 		btnSig = new JButton("Sig >");
 		panelbtns.add(btnSig);
 		
 		lblNodescu=new JLabel();
-		
+		/*
 		for(int i=0; i<solitario.montones.size();i++){
 			add(Montones[i], "cell " + (i+2) +" 1");
 		}
+		*/
 		btnAnt.setEnabled(false);
 		btnSig.setEnabled(false);
 		vjuego.mntmGuardar.setEnabled(true);
@@ -107,7 +110,7 @@ public class pSaltos extends pJuego {
 		}else{
 			JLabel Vacio = new JLabel();
 			ImageIcon icon;
-			icon = new ImageIcon("Images/" + solitario.tipoBaraja + "/Hueco");
+			icon = new ImageIcon("Images/" + solitario.tipoBaraja + "/Hueco.png");
 			Vacio.setIcon(icon);
 			lblNodescu=Vacio;
 		}
@@ -129,10 +132,19 @@ public class pSaltos extends pJuego {
 			vJuego.frame.mntmHacer.setEnabled(false);
 			btnSig.setEnabled(false);
 		}
+		for(int i=0; i<solitario.montones.size();i++){
+			add(Montones[i], "cell " + (i+2) + " 1" );
+		}
+		add(lblNodescu, "cell 1 1");
 	}
+	
 	public void hacerMvto(Mvto mvto) {
 		if(movimientos==0){
-			vjuego.stats.intentosS++;
+			if(vjuego.stats==null){
+				vjuego.stats=new Stats();
+				vjuego.stats.intentosC++;
+				vjuego.stats.writeFichero(vjuego.stats.file, 0);
+			}
 			movimientos++;
 		}else{
 			movimientos++;

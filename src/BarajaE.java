@@ -35,7 +35,7 @@ public class BarajaE implements Baraja{
 	public int[] posicionCarta(Carta carta){
 		int posiciones[]={-1,-1};
 		for(int i=0;i<4;i++){
-			for(int j=0;j<13;j++){
+			for(int j=0;j<10;j++){
 				if(Refs[i][j].equals(carta.getRef())){
 					posiciones[0]=i;
 					posiciones[1]=j;

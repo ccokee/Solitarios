@@ -83,6 +83,7 @@ public class vJuego extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego = new SolitarioClasico("BarajaF");
 				setContentPane(new pClasico(solitario.juego,frame));
+				pack();
 			}
 		});
 		mnNuevo.add(mntmClasico);
@@ -93,6 +94,7 @@ public class vJuego extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego = new SolitarioSaltos("BarajaE");
 				setContentPane(new pSaltos(solitario.juego,frame)); 
+				pack();
 			}
 		});
 		mnNuevo.add(mntmSaltos);
@@ -102,6 +104,8 @@ public class vJuego extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego=solitario.cargarSolitario();
+				setContentPane(new pSaltos(solitario.juego,frame));
+				pack();
 			}
 		});
 		mnArchivo.add(mntmAbrir);
@@ -134,7 +138,7 @@ public class vJuego extends JFrame {
 		mntmDeshacer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice), 1);
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice-1), 1);
 			}
 		});
 		mntmDeshacer.setEnabled(false);
@@ -144,7 +148,7 @@ public class vJuego extends JFrame {
 		mntmHacer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice+1), 0);
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice), 0);
 			}
 		});
 		mntmHacer.setEnabled(false);
@@ -182,8 +186,10 @@ public class vJuego extends JFrame {
 		mntmFicheroDeEstadisticas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				stats = new Stats();
 				if(stats!=null){
+					stats.setFile();
+				} else {
+					stats=new Stats();
 					mntmEstadisticas.setEnabled(true);
 				}
 			}

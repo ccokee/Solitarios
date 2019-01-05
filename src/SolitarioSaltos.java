@@ -14,20 +14,23 @@ public class SolitarioSaltos extends Solitario {
 	public SolitarioSaltos(String TipoBaraja){
 		indice=0;
 		loMasLejos=0;
+		movimientos= new ArrayList<Mvto>();
 		switch(TipoBaraja){
 		case "BarajaE":
+			tipoBaraja=TipoBaraja;
 			barajaJuego=new BarajaE();
 			Collections.shuffle(barajaJuego.getCartas());
-			barajaJuego=new BarajaF();
 			montones=new ArrayList<Monton>();
 			noDescubiertas = new Monton(0,0);
+			distribuirCartas();
 		break;
 		case "BarajaF":
+			tipoBaraja=TipoBaraja;
 			barajaJuego=new BarajaF();
 			Collections.shuffle(barajaJuego.getCartas());
-			barajaJuego=new BarajaF();
 			montones=new ArrayList<Monton>();
 			noDescubiertas = new Monton(0,0);
+			distribuirCartas();
 		break;
 		}
 		jugadasValidas();
@@ -78,8 +81,12 @@ public class SolitarioSaltos extends Solitario {
 		for(int i=barajaJuego.getCartas().size()-1;i>0;i--){
 			noDescubiertas.cartasMonton.add(barajaJuego.getCarta(i));
 		}
-		montones.add(new Monton(1,0));
-		montones.get(0).cartasMonton.add(barajaJuego.getCarta(0));
+		for(int i=0;i<3;i++){
+			montones.add(new Monton(1,0));
+			montones.get(i).cartasMonton.add(noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1));
+			montones.get(i).cartasMonton.get(0).setPos(1);
+			noDescubiertas.cartasMonton.remove(noDescubiertas.cartasMonton.size()-1);
+		}
 	}
 	
 	public boolean jugadasValidas(){
@@ -206,7 +213,7 @@ public class SolitarioSaltos extends Solitario {
 			}
 		}
 		try {
-			FileWriter writer = new FileWriter(file,false);
+			FileWriter writer = new FileWriter(file,true);
 			PrintWriter printer = new PrintWriter(writer);
 			String line = new String();
 			printer.println("Solitario saltos");
