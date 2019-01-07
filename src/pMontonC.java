@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 public class pMontonC extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	public GridBagConstraints[] gbc_constraints = new GridBagConstraints[20];
+	public GridBagConstraints gbc_constraints;
 	public int id=0;
 	public int type=0;
 	public int cnt=0;
@@ -46,15 +46,15 @@ public class pMontonC extends JPanel {
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			cnt=i;
-			gbc_constraints[i]=new GridBagConstraints();
-			gbc_constraints[i].insets = new Insets(0, 0, 0, 0);
-			gbc_constraints[i].gridx = 0;
-			gbc_constraints[i].gridy = i;
+			gbc_constraints=new GridBagConstraints();
+			gbc_constraints.insets = new Insets(0, 0, 0, 0);
+			gbc_constraints.gridx = 0;
+			gbc_constraints.gridy = i;
 			monton.cartasMonton.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if(pclasico.selector==0){
-						if(monton.cartasMonton.get(cnt).getPos()==0){
+						if(monton.cartasMonton.size()>0 && monton.cartasMonton.get(cnt).getPos()==0){
 							pclasico.tipoO=1;
 							pclasico.tipoD=1;
 							pclasico.indiceD=id;
@@ -69,10 +69,11 @@ public class pMontonC extends JPanel {
 							pclasico.tipoO=1;
 							pclasico.indiceO=id;
 							pclasico.ref=monton.cartasMonton.get(cnt).getRef();
-							pclasico.numCartas= monton.cartasMonton.size()-cnt;
+							pclasico.numCartas=monton.cartasMonton.size()-cnt;
 						}
 					} else {
 						if(pclasico.seleccion<0){
+							pclasico.selector=0;
 							pclasico.solitario.Descubiertas.cartasMonton.get(pclasico.solitario.Descubiertas.cartasMonton.size()-1).setPos(1);
 						} else {
 							//monton.cartasMonton.get(pclasico.seleccion).setPos(1);
@@ -86,8 +87,8 @@ public class pMontonC extends JPanel {
 				}
 			});
 			if(i!=monton.cartasMonton.size()-1)
-				monton.cartasMonton.get(i).setPreferredSize(new Dimension(70,10));
-			add(monton.cartasMonton.get(i), gbc_constraints[i]);
+				monton.cartasMonton.get(i).setPreferredSize(new Dimension(70,15));
+			add(monton.cartasMonton.get(i), gbc_constraints);
 			}
 		}
 
@@ -114,9 +115,10 @@ public class pMontonC extends JPanel {
 		ImageIcon icon;
 		icon = new ImageIcon("Images/" + baraja + "/Hueco.png");
 		gridBagLayout.rowHeights = new int[]{75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbc_constraints[0].insets = new Insets(0, 0, 0, 0);
-		gbc_constraints[0].gridx = 0;
-		gbc_constraints[0].gridy = 0;
+		gbc_constraints=new GridBagConstraints();
+		gbc_constraints.insets = new Insets(0, 0, 0, 0);
+		gbc_constraints.gridx = 0;
+		gbc_constraints.gridy = 0;
 		Vacio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {

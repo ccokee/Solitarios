@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -174,7 +175,7 @@ public class SolitarioClasico extends Solitario{
 		}
 		//Ultima carta descubierta a Solucion
 		for(int i=0;i<montonesSolucion.size();i++){
-			if(montonesSolucion.get(i).cartasMonton.size() > 0 &&
+			if(montonesSolucion.get(i).cartasMonton.size() > 0 && Descubiertas.cartasMonton.size()>0&&
 					(barajaJuego.cartaApilableInmediataInferior(Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1), 
 					montonesSolucion.get(i).cartasMonton.get(montonesSolucion.get(i).cartasMonton.size()-1)))){
 				jugadasValidas.add(new Mvto(0,1,2,i,1, montonesSolucion.get(i).cartasMonton.get(montonesSolucion.get(i).cartasMonton.size()-1).getRef()));
@@ -262,34 +263,48 @@ public class SolitarioClasico extends Solitario{
 		
 		//No descubiertas a descubiertas
 		if(move.tipoD==0 && move.indiceD==1 && move.tipoO==0 && move.indiceO==0){
+			System.out.println("No descu a descu!!!");
 			Descubiertas.cartasMonton.add(
 					noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1));
-			Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1).setPos(1);
+			System.out.println("Descubrimos!");
 			noDescubiertas.cartasMonton.remove(noDescubiertas.cartasMonton.size()-1);
+			Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1).setPos(1);
+			System.out.println(Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1).getRef());
 		}
 		
 		//Juego a mismo juego (descubrir carta)
 		if(move.tipoD==1 && move.tipoO==1 && move.indiceD==move.indiceO){
-			if(montonesJuego.get(move.indiceD).cartasMonton.get( montonesJuego.get(move.indiceD).cartasMonton.size()-1).getPos()==0)
+			System.out.println("Descubrir carta de juego!!!");
+			if(deshaz==1){
+				montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-1).setPos(0);
+				montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-1).setPreferredSize(new Dimension(70,15));
+			} else {
 				montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-1).setPos(1);
+				montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-1).setPreferredSize(new Dimension(70,100));
+			}
 		}
 		
 		//Juego a Descubiertas
 		if(move.tipoO==1 && move.tipoD==0 && move.indiceD==1){
+			System.out.println("Juego a Descubiertas (Deshacer)");
 			if(montonesJuego.get(move.indiceO).cartasMonton.size()>0){
 				Descubiertas.cartasMonton.add(montonesJuego.get(move.indiceO).cartasMonton.get(montonesJuego.get(move.indiceO).cartasMonton.size()-1));
+				Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1).setPos(1);
 				montonesJuego.get(move.indiceO).cartasMonton.remove(montonesJuego.get(move.indiceO).cartasMonton.size()-1);
 			}
 		}
 		//Solucion a Descubiertas
 		if(move.tipoO==2 && move.tipoD==0 && move.indiceD==0){
+			System.out.println("Solucion a Descubiertas (Deshacer)");
 			if(montonesSolucion.get(move.indiceO).cartasMonton.size()>0){
 				Descubiertas.cartasMonton.add(montonesSolucion.get(move.indiceO).cartasMonton.get(montonesSolucion.get(move.indiceO).cartasMonton.size()-1));
+				Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1).setPos(1);
 				montonesSolucion.get(move.indiceO).cartasMonton.remove(montonesSolucion.get(move.indiceO).cartasMonton.size()-1);
 			}
 		}
 		//Descubiertas a noDescubiertas
 		if(move.tipoO==0 && move.tipoD==0 && move.indiceD==0 && move.indiceO==1){
+			System.out.println("Descubiertas a noDescubiertas (Deshacer)");
 			if(Descubiertas.cartasMonton.size()>0){
 				//añadir
 				noDescubiertas.cartasMonton.add(Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1));
@@ -302,43 +317,53 @@ public class SolitarioClasico extends Solitario{
 		
 		//descubiertas a solucion
 		if(move.tipoO==0 && move.tipoD==2 && move.indiceO==1 && Descubiertas.cartasMonton.size()>0){
+			System.out.println("Descubiertas a solucion!");
 			montonesJuego.get(move.indiceD).cartasMonton.add(
 					Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1));
+			montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-1).setPos(1);
 			Descubiertas.cartasMonton.remove(Descubiertas.cartasMonton.size()-1);
 		}
 		
 		//descubiertas a juego
 		if(move.tipoO==0 && move.tipoD==1 && move.indiceO==1 && Descubiertas.cartasMonton.size()>0){
+			System.out.println("Descubiertas a Juego!!!");
 			montonesSolucion.get(move.indiceD).cartasMonton.add(
 					Descubiertas.cartasMonton.get(Descubiertas.cartasMonton.size()-1));
+			montonesSolucion.get(move.indiceD).cartasMonton.get(montonesSolucion.get(move.indiceD).cartasMonton.size()-1).setPos(1);
 			Descubiertas.cartasMonton.remove(Descubiertas.cartasMonton.size()-1);
 		}
 		
 		//juego a soluion
 		if(move.tipoO==1 && move.tipoD==2 && montonesJuego.get(move.indiceO).cartasMonton.size()> 0){
+			System.out.println("Juego a Solucion!!");
 			montonesSolucion.get(move.indiceD).cartasMonton.add(
 					montonesJuego.get(move.indiceO).cartasMonton.get(
 							montonesJuego.get(move.indiceO).cartasMonton.size()-1));
+			montonesSolucion.get(move.indiceD).cartasMonton.get(montonesSolucion.get(move.indiceD).cartasMonton.size()-1).setPos(1);
 			montonesJuego.get(move.indiceO).cartasMonton.remove(montonesJuego.get(move.indiceO).cartasMonton.size()-1);
 		}
 		
 		//Solucion a Juego
 		if(move.tipoO==2 && move.tipoD==1 && montonesSolucion.get(move.indiceO).cartasMonton.size()>0){
+			System.out.println("Solucion a Juego (DesHacer)");
 			montonesJuego.get(move.indiceD).cartasMonton.add(
 					montonesSolucion.get(move.indiceO).cartasMonton.get(
 							montonesSolucion.get(move.indiceO).cartasMonton.size()-1));
+			montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-1).setPos(1);
 			montonesSolucion.get(move.indiceO).cartasMonton.remove(montonesSolucion.get(move.indiceO).cartasMonton.size()-1);
 		}
 		
 		//juego a juego
 		if(move.tipoO==1 && move.tipoD==1 && move.indiceO!=move.indiceD){
+			System.out.println("Juego a Juego");
 			//copiar cartas a monton
 			ArrayList<Carta> temporal=new ArrayList<Carta>();
 			for(int i=1;i<move.numCartas+1;i++){
 				temporal.add(0, montonesJuego.get(move.indiceO).cartasMonton.get(montonesJuego.get(move.indiceO).cartasMonton.size()-i));
 				montonesJuego.get(move.indiceO).cartasMonton.remove(montonesJuego.get(move.indiceO).cartasMonton.get(montonesJuego.get(move.indiceO).cartasMonton.size()-i));
 			}
-			montonesJuego.get(move.tipoD).cartasMonton.addAll(temporal);
+			montonesJuego.get(move.indiceD).cartasMonton.get(montonesJuego.get(move.indiceD).cartasMonton.size()-move.numCartas).setPos(1);
+			montonesJuego.get(move.indiceD).cartasMonton.addAll(temporal);
 		}
 		
 		if (deshaz==0){

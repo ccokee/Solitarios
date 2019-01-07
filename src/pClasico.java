@@ -44,22 +44,23 @@ public class pClasico extends JPanel {
 	public pClasico(Solitario solitarioClasico,vJuego vjuego) {
 		this.vjuego=vjuego;
 		movimientos=0;
-		setSize(850,450);
+		setSize(850,550);
 		setLayout(new MigLayout("", "[10.00][70.00][70.00][20.00,grow][70.00][70.00][70.00][70.00][70.00][70.00][70.00][70.00][10.00,left]", "[10.00][100.00][10.00][:250.00:250.00,top][10.00][20.00,bottom]"));
 		setBackground(new Color(0,155,0));
 		
 		this.solitario=solitarioClasico;
 		btnAnt = new JButton("< Ant");
-		add(btnAnt, "cell 4 5 2 1,growx");
+
 		
 		lblMvmnt= new JLabel(solitario.indice + "/" + solitario.loMasLejos, JLabel.CENTER);
 		lblMvmnt.setVerticalAlignment(SwingConstants.TOP);
 		lblMvmnt.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMvmnt.setAlignmentY(Component.CENTER_ALIGNMENT);
 		lblMvmnt.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(lblMvmnt, "cell 6 5,alignx center");
 		
 		btnSig = new JButton("Sig >");
+		add(btnAnt, "cell 4 5 2 1,growx");
+		add(lblMvmnt, "cell 6 5,alignx center");
 		add(btnSig, "cell 7 5 2 1,growx");
 		btnAnt.setEnabled(false);
 		btnSig.setEnabled(false);
@@ -91,7 +92,7 @@ public class pClasico extends JPanel {
 						}
 					} else {
 						selector=0;
-						tipoD=1;
+						tipoD=2;
 						indiceD=cnt;
 						if(seleccion==-1){
 							solitario.Descubiertas.cartasMonton.get(solitario.Descubiertas.cartasMonton.size()-1).setPos(1);
@@ -117,7 +118,7 @@ public class pClasico extends JPanel {
 					public void mouseReleased(MouseEvent e) {
 						if(selector==1){
 							selector=0;
-							tipoD=1;
+							tipoD=2;
 							indiceD=cnt;
 							numCartas=1;
 							if(seleccion==-1){
@@ -130,6 +131,7 @@ public class pClasico extends JPanel {
 				lblFinal[i]=Vacio;
 			}
 		}
+		System.out.println("Numero de montones de juego: " + solitario.montonesJuego.size() + " " + MontonesJuego.length);
 		for(int i=0;i<MontonesJuego.length;i++){
 			if(solitario.montonesJuego.get(i).cartasMonton.size()>0){
 				MontonesJuego[i]=new pMontonC(solitario.montonesJuego.get(i),1,i, this);
@@ -152,6 +154,20 @@ public class pClasico extends JPanel {
 						ref=solitario.Descubiertas.cartasMonton.get(solitario.Descubiertas.cartasMonton.size()-1).getRef();
 						numCartas=1;
 						}
+					} else {
+						selector=0;
+						tipoD=0;
+						indiceD=1;
+						if(tipoO==0){
+							solitario.Descubiertas.cartasMonton.get(solitario.Descubiertas.cartasMonton.size()-1).setPos(1);
+						}
+						if(tipoO==1){
+							solitario.montonesJuego.get(indiceO).cartasMonton.get(solitario.montonesJuego.get(indiceO).cartasMonton.size()-numCartas).setPos(1);
+						}
+						if(tipoO==2){
+							solitario.montonesSolucion.get(indiceO).cartasMonton.get(solitario.montonesSolucion.get(indiceO).cartasMonton.size()-1).setPos(1);
+						}
+						hacerMvto(new Mvto(tipoO,indiceO,tipoD,indiceD,numCartas,ref));
 					}
 				}
 			});
@@ -234,6 +250,9 @@ public class pClasico extends JPanel {
 			vJuego.frame.mntmHacer.setEnabled(false);
 			btnSig.setEnabled(false);
 		}
+		removeAll();
+		revalidate();
+		//Añadir nuevos
 		for (int i=0;i<MontonesJuego.length;i++){
 			add(MontonesJuego[i], "cell " + (i+4) + " 3");
 		}
@@ -242,6 +261,9 @@ public class pClasico extends JPanel {
 		for(int i=0;i<lblFinal.length;i++){
 			add(lblFinal[i], "cell " + (i+8) + " 1");
 		}
+		add(btnAnt, "cell 4 5 2 1,growx");
+		add(lblMvmnt, "cell 6 5,alignx center");
+		add(btnSig, "cell 7 5 2 1,growx");
 	}
 
 	public void hacerMvto(Mvto mvto) {

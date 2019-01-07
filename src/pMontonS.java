@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class pMontonS extends JPanel {
 	private static final long serialVersionUID = 1L;
-	public GridBagConstraints[] gbc_constraints = new GridBagConstraints[20];
+	public GridBagConstraints gbc_constraints;
 	public Monton monton;
 	public int id=0;
 	public int type=0;
@@ -41,10 +41,10 @@ public class pMontonS extends JPanel {
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			int cnt=i;
-			gbc_constraints[i]=new GridBagConstraints();
-			gbc_constraints[i].insets = new Insets(0, 0, 0, 0);
-			gbc_constraints[i].gridx = 0;
-			gbc_constraints[i].gridy = i;
+			gbc_constraints=new GridBagConstraints();
+			gbc_constraints.insets = new Insets(0, 0, 0, 0);
+			gbc_constraints.gridx = 0;
+			gbc_constraints.gridy = i;
 			if(cnt==monton.cartasMonton.size()-1){
 			monton.cartasMonton.get(i).addMouseListener(new MouseAdapter() {
 				@Override
@@ -70,7 +70,7 @@ public class pMontonS extends JPanel {
 			}
 			if(i!=monton.cartasMonton.size()-1)
 				monton.cartasMonton.get(i).setPreferredSize(new Dimension(57,10));
-			add(monton.cartasMonton.get(i), gbc_constraints[i]);
+			add(monton.cartasMonton.get(i), gbc_constraints);
 			}
 	}
 	
