@@ -71,14 +71,14 @@ public class pSaltos extends pJuego {
 		btnSig.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice+1), 0);
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice), 0);
 			}
 		});
 		btnAnt = new JButton("< Ant");
 		btnAnt.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice), 1);
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice-1), 1);
 			}
 		});
 		btnAnt.setEnabled(false);

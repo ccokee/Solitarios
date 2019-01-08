@@ -141,7 +141,7 @@ public class vJuego extends JFrame {
 		mntmDeshacer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice-1), 1);
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice-1), 1);
 			}
 		});
 		mntmDeshacer.setEnabled(false);
@@ -151,7 +151,7 @@ public class vJuego extends JFrame {
 		mntmHacer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.juego.indice), 0);
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice), 0);
 			}
 		});
 		mntmHacer.setEnabled(false);
