@@ -17,14 +17,13 @@ public class Carta extends JLabel{
 		this.ref=ref;
 		this.pos=pos;
 		this.setBaraja(baraja);
-		setBackground(new Color(255,255,255));
+		setHorizontalAlignment(JLabel.LEFT);
+		setVerticalAlignment(JLabel.TOP);
 		if(this.pos==1)
 			System.out.println("Intentando crear carta: " +ref);
 			icon = new ImageIcon("Images/" + baraja + "/" + ref.charAt(0)+"_of_"+ref.charAt(1)+".png");
 		if(this.pos==0)
 			icon = new ImageIcon("Images/" + baraja + "/Reverse.png");
-		setHorizontalAlignment(JLabel.LEFT);
-		setVerticalAlignment(JLabel.TOP);
 		setIcon(icon);
 		setVisible(true);
 	}

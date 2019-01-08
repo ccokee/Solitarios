@@ -47,14 +47,14 @@ public class pClasico extends pJuego {
 	public pClasico(Solitario solitarioClasico,vJuego vjuego) {
 		this.vjuego=vjuego;
 		movimientos=0;
-		setPreferredSize(new Dimension(1000,700));
+		setPreferredSize(new Dimension(850,620));
 		setLayout(new BorderLayout(0, 0));
 		panelbtns = new JPanel();
 		scrollpane = new JScrollPane();
 		scrollpane.setLayout(new ScrollPaneLayout());
 		add(scrollpane, BorderLayout.CENTER);
 		interior=new JPanel();
-		interior.setLayout(new MigLayout("", "[10.00][70.00][70.00][20.00,grow][70.00][70.00][70.00][70.00][70.00][70.00][70.00][70.00][10.00,left]", "[10.00][100.00][10.00][:250.00:250.00,top][10.00][20.00,bottom]"));
+		interior.setLayout(new MigLayout("aligny top","[10.00][70.00][70.00][20.00,grow][70.00][70.00][70.00][70.00][70.00][70.00][70.00][70.00][10.00,left]", "[10.00][100.00][10.00][381.00:381.00:381.00][10.00][20.00,bottom]"));
 		interior.setBackground(new Color(0,155,0));
 		
 		this.solitario=solitarioClasico;
@@ -291,7 +291,9 @@ public class pClasico extends pJuego {
 		interior.revalidate();
 		//Añadir nuevos
 		for (int i=0;i<MontonesJuego.length;i++){
-			interior.add(MontonesJuego[i], "cell " + (i+4) + " 3");
+			interior.add(MontonesJuego[i], "cell " + (i+4) + " 3,aligny top");
+			interior.repaint();
+			revalidate();
 		}
 		interior.add(lblNodescu, "cell 1 1");
 		interior.add(lblDescu, "cell 2 1");
@@ -299,6 +301,7 @@ public class pClasico extends pJuego {
 			interior.add(lblFinal[i], "cell " + (i+8) + " 1");
 		}
 		scrollpane.setViewportView(interior);
+		
 	}
 
 	public void hacerMvto(Mvto mvto) {

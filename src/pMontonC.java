@@ -16,16 +16,16 @@ public class pMontonC extends JPanel {
 	public GridBagConstraints gbc_constraints;
 	public int id=0;
 	public int type=0;
-	//public int cnt=0;
 	public int seleccion=-1;
 	public Monton monton;
+	private JLabel dummy;
 	
 	public pMontonC(Monton monton, int type, int id, pClasico pclasico) {
 		this.id=id;
 		this.type=type;
 		this.monton=monton;
 		setBackground(new Color(0,155,0));
-		
+		setPreferredSize(new Dimension(380,70));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 
 		setLayout(gridBagLayout);
@@ -33,10 +33,9 @@ public class pMontonC extends JPanel {
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			int cnt=i;
 			gbc_constraints=new GridBagConstraints();
-			//gbc_constraints.insets = new Insets(0, 0, 0, 0);
 			gbc_constraints.gridx = 0;
 			gbc_constraints.gridy = i;
-			//System.out.println("Carta: " + monton.cartasMonton.get(i).getRef() + " Listeners:" + monton.cartasMonton.get(i).getMouseListeners().length);
+			//gbc_constraints.anchor = GridBagConstraints.NORTHWEST;
 			if(monton.cartasMonton.get(i).getMouseListeners().length==0){
 				monton.cartasMonton.get(i).addMouseListener(new MouseAdapter() {
 				@Override
@@ -79,18 +78,27 @@ public class pMontonC extends JPanel {
 			});
 			}
 			
-			if(i!=monton.cartasMonton.size()-1)
+			if(i!=monton.cartasMonton.size()-1){
 				monton.cartasMonton.get(i).setPreferredSize(new Dimension(70,15));
-			else
+			}else{
 				monton.cartasMonton.get(i).setPreferredSize(new Dimension(70,100));
+			}
 			add(monton.cartasMonton.get(i), gbc_constraints);
 			}
+			dummy=new JLabel();
+			gbc_constraints=new GridBagConstraints();
+			gbc_constraints.gridx = 0;
+			gbc_constraints.gridy = 20;
+			gbc_constraints.weighty=0.1;
+			add(dummy,gbc_constraints);
+			revalidate();
+			repaint();
 		}
 
 	public pMontonC(int type, int id, String baraja, pClasico pclasico) {
 		this.type=type;
 		setBackground(new Color(0,155,0));
-		setSize(50,225);
+		//setSize(50,225);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
