@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -20,7 +21,7 @@ public class pMontonS extends JPanel {
 		this.type=type;
 		this.monton=monton;
 		setBackground(new Color(0,155,0));
-		setSize(38,430);
+		setPreferredSize(new Dimension(680,40));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 
 		setLayout(gridBagLayout);
@@ -28,7 +29,6 @@ public class pMontonS extends JPanel {
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			int cnt=i;
 			gbc_constraints=new GridBagConstraints();
-			//gbc_constraints.insets = new Insets(0, 0, 0, 0);
 			gbc_constraints.gridx = 0;
 			gbc_constraints.gridy = i;
 			if(cnt==monton.cartasMonton.size()-1 && monton.cartasMonton.get(monton.cartasMonton.size()-1).getMouseListeners().length == 0){
@@ -60,6 +60,11 @@ public class pMontonS extends JPanel {
 				monton.cartasMonton.get(i).setPreferredSize(new Dimension(57,90));
 			add(monton.cartasMonton.get(i), gbc_constraints);
 			}
+		gbc_constraints=new GridBagConstraints();
+		gbc_constraints.gridx = 0;
+		gbc_constraints.gridy = 41;
+		gbc_constraints.weighty=0.1;
+		add(new JLabel(),gbc_constraints);
 	}
 	
 }

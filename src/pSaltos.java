@@ -45,7 +45,7 @@ public class pSaltos extends pJuego {
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
-			+ "[10.00]", "[10.00][430.00]");
+			+ "[10.00]", "[10.00][430.00,grow][10.00][20.00,grow]");
 
 	/**
 	 * Create the panel.
@@ -59,10 +59,11 @@ public class pSaltos extends pJuego {
 		scrollpane = new JScrollPane();
 		add(scrollpane, BorderLayout.CENTER);
 		interior=new JPanel();
-		interior.setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][][10.00][20.00,grow]"));
+		//interior.setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][][10.00][20.00,grow]"));
+		interior.setLayout(LayForGame);
 		scrollpane.setLayout(new ScrollPaneLayout());
-		scrollpane.setSize(1000,400);
-		setPreferredSize(new Dimension(1010,410));
+		scrollpane.setSize(1000,690);
+		setPreferredSize(new Dimension(1010,700));
 		interior.setBackground(new Color(0,155,0));
 		
 		panelbtns = new JPanel();
