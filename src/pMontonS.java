@@ -22,27 +22,13 @@ public class pMontonS extends JPanel {
 		setBackground(new Color(0,155,0));
 		setSize(38,430);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
-		/*
-		int[] altos = new int[20];
-		for(int i=0;i<monton.cartasMonton.size();i++){
-			altos[i]=5;
-			if(i==monton.cartasMonton.size()-1){
-				altos[i]=25;
-			}
-		}
-		gridBagLayout.rowHeights=altos;
-		*/
+
 		setLayout(gridBagLayout);
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){
 			int cnt=i;
 			gbc_constraints=new GridBagConstraints();
-			gbc_constraints.insets = new Insets(0, 0, 0, 0);
+			//gbc_constraints.insets = new Insets(0, 0, 0, 0);
 			gbc_constraints.gridx = 0;
 			gbc_constraints.gridy = i;
 			if(cnt==monton.cartasMonton.size()-1 && monton.cartasMonton.get(monton.cartasMonton.size()-1).getMouseListeners().length == 0){

@@ -25,23 +25,9 @@ public class pMontonC extends JPanel {
 		this.type=type;
 		this.monton=monton;
 		setBackground(new Color(0,155,0));
-		//setSize(70,250);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		/*
-		int[] altos = new int[20];
-		for(int i=0;i<monton.cartasMonton.size();i++){
-			altos[i]=10;
-			if(i==monton.cartasMonton.size()-1){
-				altos[i]=75;
-			}
-		}
-		gridBagLayout.rowHeights=altos;
-		*/
+
 		setLayout(gridBagLayout);
 		
 		for(int i=0;i<monton.cartasMonton.size();i++){

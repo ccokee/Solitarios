@@ -54,7 +54,7 @@ public class pClasico extends pJuego {
 		scrollpane.setLayout(new ScrollPaneLayout());
 		add(scrollpane, BorderLayout.CENTER);
 		interior=new JPanel();
-		interior.setLayout(new MigLayout("", "[10.00][70.00][70.00][20.00,grow][70.00][70.00][70.00][70.00][70.00][70.00][70.00][70.00][10.00,left]", "[10.00][100.00][10.00][:250.00:250.00,grow,top][10.00][20.00,bottom]"));
+		interior.setLayout(new MigLayout("", "[10.00][70.00][70.00][20.00,grow][70.00][70.00][70.00][70.00][70.00][70.00][70.00][70.00][10.00,left]", "[10.00][100.00][10.00][:250.00:250.00,top][10.00][20.00,bottom]"));
 		interior.setBackground(new Color(0,155,0));
 		
 		this.solitario=solitarioClasico;
