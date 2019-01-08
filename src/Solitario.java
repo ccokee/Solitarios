@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 
 public class Solitario {
 
+	public String Tipo;
 	public Solitario juego;
 	public int type;
 	public File file;
@@ -32,10 +33,12 @@ public class Solitario {
 		this.type=type;
 		switch (type){
 		case 0:
+			Tipo="Saltos";
 			this.tipoBaraja = "BarajaE";
 			this.juego = new SolitarioSaltos(tipoBaraja);
 			break;
 		case 1:
+			Tipo="Clasico";
 			this.tipoBaraja = "BarajaF";
 			this.juego = new SolitarioClasico(tipoBaraja);
 			break;
@@ -54,10 +57,12 @@ public class Solitario {
 				line=scanner.nextLine();
 				if(line.equals("Solitario saltos")){
 					this.type=0;
-					juego = new SolitarioSaltos(file);
+					Tipo="Saltos";
+					juego = new SolitarioSaltos(file, "BarajaE");
 				} else if(line.equals("Solitario clásico")){
 					this.type=1;
-					juego = new SolitarioClasico(file);
+					Tipo="Clasico";
+					juego = new SolitarioClasico(file, "BarajaF");
 				}
 			} catch (FileNotFoundException e) {
 				System.exit(-1);

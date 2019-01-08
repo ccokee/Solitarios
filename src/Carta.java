@@ -19,6 +19,7 @@ public class Carta extends JLabel{
 		this.setBaraja(baraja);
 		setBackground(new Color(255,255,255));
 		if(this.pos==1)
+			System.out.println("Intentando crear carta: " +ref);
 			icon = new ImageIcon("Images/" + baraja + "/" + ref.charAt(0)+"_of_"+ref.charAt(1)+".png");
 		if(this.pos==0)
 			icon = new ImageIcon("Images/" + baraja + "/Reverse.png");

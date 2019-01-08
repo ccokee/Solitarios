@@ -20,4 +20,8 @@ public class Mvto {
 	public Mvto() {
 		// TODO Auto-generated constructor stub
 	}
+	@Override
+	public String toString(){
+		return ("[" +ref+"] Tipo Origen: " + tipoO + " Indice Origen: " + indiceO + " Tipo Destino: " + tipoD + " Indice Destino: " + indiceD + " No Cartas: " + numCartas);
+	}
 }

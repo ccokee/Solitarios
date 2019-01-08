@@ -45,7 +45,7 @@ public class pMontonS extends JPanel {
 			gbc_constraints.insets = new Insets(0, 0, 0, 0);
 			gbc_constraints.gridx = 0;
 			gbc_constraints.gridy = i;
-			if(cnt==monton.cartasMonton.size()-1){
+			if(cnt==monton.cartasMonton.size()-1 && monton.cartasMonton.get(monton.cartasMonton.size()-1).getMouseListeners().length == 0){
 			monton.cartasMonton.get(i).addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseReleased(MouseEvent e) {
@@ -70,6 +70,8 @@ public class pMontonS extends JPanel {
 			}
 			if(i!=monton.cartasMonton.size()-1)
 				monton.cartasMonton.get(i).setPreferredSize(new Dimension(57,10));
+			else
+				monton.cartasMonton.get(i).setPreferredSize(new Dimension(57,90));
 			add(monton.cartasMonton.get(i), gbc_constraints);
 			}
 	}

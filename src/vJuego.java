@@ -104,7 +104,10 @@ public class vJuego extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				solitario.juego=solitario.cargarSolitario();
-				setContentPane(new pSaltos(solitario.juego,frame));
+				if(solitario.Tipo.equals("Saltos"))
+					setContentPane(new pSaltos(solitario.juego,frame));
+				if(solitario.Tipo.equals("Clasico"))
+					setContentPane(new pClasico(solitario.juego,frame));
 				pack();
 			}
 		});
@@ -173,8 +176,12 @@ public class vJuego extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				if (stats==null){
 					stats = new Stats();
+					stats.readFichero(stats.file);
+					stats.dialogStats.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					stats.dialogStats.setVisible(true);
 				} else {
 					stats.readFichero(stats.file);
+					stats.dialogStats.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					stats.dialogStats.setVisible(true);
 				}
 			}
@@ -188,9 +195,13 @@ public class vJuego extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				if(stats!=null){
 					stats.setFile();
+					stats.readFichero(stats.file);
 				} else {
 					stats=new Stats();
+					stats.readFichero(stats.file);
 					mntmEstadisticas.setEnabled(true);
+					stats.dialogStats.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					stats.dialogStats.setVisible(true);
 				}
 			}
 		});

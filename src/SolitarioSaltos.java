@@ -12,6 +12,7 @@ public class SolitarioSaltos extends Solitario {
 
 	
 	public SolitarioSaltos(String TipoBaraja){
+		Tipo="Saltos";
 		indice=0;
 		loMasLejos=0;
 		movimientos= new ArrayList<Mvto>();
@@ -36,37 +37,44 @@ public class SolitarioSaltos extends Solitario {
 		jugadasValidas();
 	}
 	
-	public SolitarioSaltos(File file){
+	public SolitarioSaltos(File file, String TipoBaraja){
+		Tipo="Saltos";
 		indice=0;
 		loMasLejos=0;
+		movimientos= new ArrayList<Mvto>();
+		tipoBaraja=TipoBaraja;
+		montones=new ArrayList<Monton>();
+		noDescubiertas = new Monton(0,0);
+		
 		String linea=new String();
 		String[] tokens;
 		
-		montones=null;
 		
 		try {
 			this.file=file;
 			Scanner parser = new Scanner(file);
 			this.barajaJuego=new BarajaE();
-			parser.nextLine();
+			linea=parser.nextLine();
 			//Cartas sin extraer
 			linea=parser.nextLine();
 			tokens=linea.split(" ");
 			for(int i=0;i<tokens.length;i++){
-				Carta carta= new Carta(tokens[i],"BarajaE",0);
+				Carta carta= new Carta(tokens[i],tipoBaraja,0);
 				barajaJuego.addCarta(carta);
 				noDescubiertas.cartasMonton.add(carta);
 			}
 			//Montones
+			int conter=0;
 			while(parser.hasNextLine()){
+				montones.add(new Monton(1, 0));
 				linea=parser.nextLine();
-				
-				for(int i=9;i<tokens.length;i++){
-					Carta carta= new Carta(tokens[i],"BarajaE",1);
+				tokens=linea.split(" ");
+				for(int i=0;i<tokens.length;i++){
+					Carta carta= new Carta(tokens[i],tipoBaraja,1);
 					barajaJuego.addCarta(carta);
-					temp.cartasMonton.add(carta);
+					montones.get(conter).cartasMonton.add(carta);
 				}
-				montones.add(temp);
+				conter++;
 			}
 			parser.close();
 		} catch (IOException ex){
@@ -136,6 +144,8 @@ public class SolitarioSaltos extends Solitario {
 					noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1));
 			//DescubrirCarta
 			montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).setPos(1);
+			if(montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).getMouseListeners().length>0)
+			montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).removeMouseListener(montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).getMouseListeners()[0]);
 			//Eliminar carta del monto original
 			noDescubiertas.cartasMonton.remove(noDescubiertas.cartasMonton.size()-1);
 		}
@@ -143,6 +153,8 @@ public class SolitarioSaltos extends Solitario {
 		if(move.tipoO==1 && montones.get(move.indiceO).cartasMonton.size()>0){
 			montones.get(move.indiceD).cartasMonton.add(
 					montones.get(move.indiceO).cartasMonton.get(montones.get(move.indiceO).cartasMonton.size()-1));
+			if(montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).getMouseListeners().length>0)
+			montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).removeMouseListener(montones.get(move.indiceD).cartasMonton.get(montones.get(move.indiceD).cartasMonton.size()-1).getMouseListeners()[0]);
 			montones.get(move.indiceO).cartasMonton.remove(montones.get(move.indiceO).cartasMonton.size()-1);
 			
 			if(montones.get(move.indiceO).cartasMonton.size()==0){
@@ -158,6 +170,9 @@ public class SolitarioSaltos extends Solitario {
 				montones.get(move.indiceO).cartasMonton.remove(montones.get(move.indiceO).cartasMonton.size()-1);
 				//cubrir carta
 				noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1).setPos(0);
+				//eliminar Mouse
+				if(noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1).getMouseListeners().length>0)
+					noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1).removeMouseListener(noDescubiertas.cartasMonton.get(noDescubiertas.cartasMonton.size()-1).getMouseListeners()[0]);
 			}
 		}
 		
@@ -207,17 +222,18 @@ public class SolitarioSaltos extends Solitario {
 	public boolean guardarSolitario(int como){
 		JFileChooser fileChooser=new JFileChooser();
 		if (file==null || como==1){
+			fileChooser.setDialogTitle("Guardar Como..");
 			int result = fileChooser.showSaveDialog(null);
 			if(result==JFileChooser.APPROVE_OPTION){
 				this.file = fileChooser.getSelectedFile();
 			}
 		}
 		try {
-			FileWriter writer = new FileWriter(file,true);
+			FileWriter writer = new FileWriter(file,false);
 			PrintWriter printer = new PrintWriter(writer);
 			String line = new String();
 			printer.println("Solitario saltos");
-			line=" ";
+			line="";
 			if(noDescubiertas.cartasMonton.size()>0)
 				line = noDescubiertas.cartasMonton.get(0).getRef();
 			for(int i=1;i<noDescubiertas.cartasMonton.size();i++){
@@ -231,10 +247,10 @@ public class SolitarioSaltos extends Solitario {
 				for(int j=1; j<montones.get(i).cartasMonton.size(); j++){
 					line=(line + " " + montones.get(i).cartasMonton.get(j).getRef());
 				}
-				printer.print(line);
-				printer.close();
-				writer.close();
+				printer.println(line);
 			}
+			printer.close();
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

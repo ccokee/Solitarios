@@ -75,7 +75,5 @@ public class dStats extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 		}
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setVisible(true);
 	}
 }

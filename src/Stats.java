@@ -31,6 +31,7 @@ public class Stats {
 	
 	public void setFile(){
 		JFileChooser fileChooser=new JFileChooser();
+		fileChooser.setDialogTitle("Abrir archivo de estadísticas");
 		int result = fileChooser.showOpenDialog(null);
 		if(result==JFileChooser.APPROVE_OPTION){
 			this.file = fileChooser.getSelectedFile();
@@ -45,7 +46,7 @@ public class Stats {
 			Scanner parser = new Scanner(file);
 			parser.nextLine();
 			linea=parser.nextLine();
-			if(linea.equals("solitario saltos")){
+			if(linea.equals("Solitario saltos")){
 				intentosS=parser.nextInt();
 				exitosS=parser.nextInt();
 			}
@@ -62,6 +63,7 @@ public class Stats {
 			exitosS=0;
 			return false;
 		}
+		dialogStats = new dStats();
 		dialogStats.lblExitosClasico.setText("Exitos: " + exitosC);
 		dialogStats.lblIntentosClasico.setText("Intentos: " + intentosC);
 		dialogStats.lblExitosSaltos.setText("Exitos: " + exitosS);
@@ -72,6 +74,7 @@ public class Stats {
 	public boolean writeFichero(File file, int como){
 		JFileChooser fileChooser=new JFileChooser();
 		if (file==null || como==1){
+			fileChooser.setDialogTitle("Guardar estadisticas como..");
 			int result = fileChooser.showSaveDialog(null);
 			if(result==JFileChooser.APPROVE_OPTION){
 				this.file = fileChooser.getSelectedFile();
@@ -79,7 +82,7 @@ public class Stats {
 		}
 		try {
 			FileWriter writer = new FileWriter(file);
-			PrintWriter printer = new PrintWriter(writer,true);
+			PrintWriter printer = new PrintWriter(writer,false);
 			printer.println("Solitario saltos");
 			printer.println(intentosS);
 			printer.println(exitosS);

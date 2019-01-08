@@ -1,4 +1,7 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,14 +15,16 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneLayout;
 
 public class pSaltos extends pJuego {
 	
 	public Solitario solitario;
 	public JLabel lblNodescu;
 	public pMontonS[] Montones = new pMontonS[52];
-	public JLabel lblMvmnt;
-	public JButton btnAnt,btnSig;
+
 	public String ref;
 	public int selector=0;
 	public int seleccion;
@@ -31,9 +36,12 @@ public class pSaltos extends pJuego {
 	public vJuego vjuego;
 	public int movimientos;
 
+
 	private static final long serialVersionUID = 1L;
 	MigLayout LayForGame = new MigLayout("", "[10.00][38.00][38.00]"
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
+			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
+			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
 			+ "[0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow]"
@@ -46,42 +54,57 @@ public class pSaltos extends pJuego {
 		this.vjuego=vjuego;
 		this.solitario=solitarioSaltos;
 		this.movimientos=0;
-		setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][10.00][20.00,grow]"));
-		setBackground(new Color(0,155,0));
-		/*
-		for(int i=0; i<solitario.montones.size();i++){
-			add(Montones[i], "cell " + (i+2) + " 1" );
-		}
-		*/
-		lblNodescu=new JLabel();
-		add(lblNodescu, "cell 1 1");
+		setLayout(new BorderLayout(0, 0));
+		panelbtns = new JPanel();
+		scrollpane = new JScrollPane();
+		add(scrollpane, BorderLayout.CENTER);
+		interior=new JPanel();
+		interior.setLayout(new MigLayout("", "[10.00][38.00][38.00,grow][grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][0.00,grow][10.00]", "[10.00][430.00,grow][][10.00][20.00,grow]"));
+		scrollpane.setLayout(new ScrollPaneLayout());
+		scrollpane.setSize(1000,400);
+		setPreferredSize(new Dimension(1010,410));
+		interior.setBackground(new Color(0,155,0));
 		
-		JPanel panelbtns = new JPanel();
-		add(panelbtns, "cell 0 3 44 1,grow");
+		panelbtns = new JPanel();
 		panelbtns.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		btnAnt = new JButton("< Ant");
-		panelbtns.add(btnAnt);
-		
-		lblMvmnt = new JLabel( solitario.indice + "/" + solitario.loMasLejos);
-		lblMvmnt.setHorizontalAlignment(SwingConstants.CENTER);
-		panelbtns.add(lblMvmnt);
-		
 		btnSig = new JButton("Sig >");
-		panelbtns.add(btnSig);
-		
-		lblNodescu=new JLabel();
-		/*
-		for(int i=0; i<solitario.montones.size();i++){
-			add(Montones[i], "cell " + (i+2) +" 1");
-		}
-		*/
+		btnSig.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice+1), 0);
+			}
+		});
+		btnAnt = new JButton("< Ant");
+		btnAnt.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				solitario.juego.hacerMovimiento(solitario.juego.movimientos.get(solitario.indice), 1);
+			}
+		});
 		btnAnt.setEnabled(false);
 		btnSig.setEnabled(false);
+		
+		lblMvmnt = new JLabel( solitario.indice + "/" + solitario.loMasLejos);
+		lblMvmnt.setVerticalAlignment(SwingConstants.TOP);
+		lblMvmnt.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMvmnt.setAlignmentY(Component.CENTER_ALIGNMENT);
+		lblMvmnt.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		panelbtns.add(btnAnt);
+		panelbtns.add(lblMvmnt);
+		panelbtns.add(btnSig);
+
+		lblNodescu=new JLabel();
+
 		vjuego.mntmGuardar.setEnabled(true);
 		vjuego.mntmGuardarComo.setEnabled(true);
 		vjuego.mntmResolver.setEnabled(true);
 		
+		scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+        add(panelbtns, BorderLayout.SOUTH);	
+        
 		refrescarSolitario();
 	}
 
@@ -118,6 +141,17 @@ public class pSaltos extends pJuego {
 		for(int i=0;i<solitario.montones.size();i++){
 			Montones[i]=new pMontonS(solitario.montones.get(i),1,i, this);
 		}
+
+		interior.removeAll();
+		interior.revalidate();
+
+		
+		for(int i=0; i<solitario.montones.size();i++){
+			interior.add(Montones[i], "cell " + (i+2) + " 1" );
+		}
+		interior.add(lblNodescu, "cell 1 1");
+		
+		scrollpane.setViewportView(interior);
 		if(solitario.indice>0){
 			vJuego.frame.mntmDeshacer.setEnabled(true);
 			btnAnt.setEnabled(true);
@@ -132,10 +166,6 @@ public class pSaltos extends pJuego {
 			vJuego.frame.mntmHacer.setEnabled(false);
 			btnSig.setEnabled(false);
 		}
-		for(int i=0; i<solitario.montones.size();i++){
-			add(Montones[i], "cell " + (i+2) + " 1" );
-		}
-		add(lblNodescu, "cell 1 1");
 	}
 	
 	public void hacerMvto(Mvto mvto) {
